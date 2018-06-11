@@ -1,0 +1,357 @@
+{% load staticfiles %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+{#    <meta name="viewport" content="width=device-width, initial-scale=0.9, shrink-to-fit=no">#}
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Android-->
+    <meta name="theme-color" content="#455A64" />
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#455A64">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <title>
+    {% block title %}
+        EzySchool | Task
+    {% endblock %}
+    </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/uikit.min.css' %}">
+    <link rel="stylesheet" type="text/css" media="screen, print" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/uikit-rtl.min.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+        integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+        crossorigin="anonymous">
+    <link rel='shortcut icon' type='image/x-icon' href="{% static 'media/favicon.ico' %}" />
+    <script src="{% static 'js/uikit.min.js' %}"></script>
+    <script src="{% static 'js/uikit-icons.min.js' %}"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous">
+    </script>
+</head>
+
+<body>
+    <div class="uk-responsive" uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky;">
+        <nav id="navBar" class="noprint uk-navbar-container uk-background-secondary" uk-navbar >
+            <div class="uk-navbar-left">
+                <ul class="uk-navbar-nav">
+                    <li>
+                        <a class="uk-active uk-text-bold safedi" href="{% url 'home' %}"> Home </a>
+                    </li>
+                    <li>
+                        <a class="safedi" href="#">Price Range</a>
+                        <div class="uk-navbar-dropdown safedi">
+                            <ul class="uk-nav uk-navbar-dropdown-nav">
+                                <li><a><input id="5k" class="uk-checkbox" type="checkbox">  ₹0 to ₹5,000</a></li>
+                                <li><a><input id="5se10" class="uk-checkbox" type="checkbox">  ₹5,000+ to ₹10,000</a></li>
+                                <li><a><input id="10se15" class="uk-checkbox" type="checkbox">  ₹10,000+ to ₹15,000</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a class="safedi" href="#">Operating System</a>
+                        <div class="uk-navbar-dropdown safedi">
+                            <ul class="uk-nav uk-navbar-dropdown-nav">
+                                <li><a><input id="android" class="uk-checkbox" type="checkbox"> Android </a></li>
+                                <li><a><input id="ios" class="uk-checkbox" type="checkbox">  iOS</a></li>
+                                <li><a><input id="wp" class="uk-checkbox" type="checkbox">  Windows Phone</a></li>
+                                <li><a><input id="symbian" class="uk-checkbox" type="checkbox">  Symbian</a></li>
+                                <li><a><input id="blackberry" class="uk-checkbox" type="checkbox">  Blackberry</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a class="safedi" href="#">Data Transfer</a>
+                        <div class="uk-navbar-dropdown safedi">
+                            <ul class="uk-nav uk-navbar-dropdown-nav">
+                                <li><a><input id="gsm" class="uk-checkbox" type="checkbox"> GSM </a></li>
+                                <li><a><input id="3g" class="uk-checkbox" type="checkbox">  3G</a></li>
+                                <li><a><input id="gprs" class="uk-checkbox" type="checkbox">  GPRS</a></li>
+                                <li><a><input id="edge" class="uk-checkbox" type="checkbox">  Edge</a></li>
+                                <li><a><input id="4g" class="uk-checkbox" type="checkbox">  4G</a></li>
+                                <li><a><input id="wifi" class="uk-checkbox" type="checkbox">  Wi-Fi</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a class="safedi" href="#">Processor Speed</a>
+                        <div class="uk-navbar-dropdown safedi">
+                            <ul class="uk-nav uk-navbar-dropdown-nav">
+                                <li>
+                                    <a>
+                                        <div id="val" class="uk-text-center"></div>
+                                        <div class="uk-text-right@s uk-text-success">5</div>
+                                        <input class="uk-range" type="range" value={{ core }} min="0.5" max="5" step="0.1" onchange="showIt(), shipIt()"> Select maximum speed
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a class="safedi uk-button-primary" id="submitwa"> Filter It</a>
+                    </li>
+                    <li>
+                        <a class="safedi uk-button-danger" href="/admin/"> Add Mobile</a>
+                    </li>
+                </ul>
+                <div class="uk-navbar-item">
+                    <a class="uk-search uk-search-navbar">
+                        <span uk-search-icon></span>
+                        <input onchange="searchIt()" id="search" class="uk-search-input safedi" type="search" placeholder="Search Brand/Model/OS/Price/Speed ...">
+                    </a>
+                </div>
+            </div>
+        </nav>
+        <ul class="uk-subnav uk-background-default sunflower sub" uk-margin>
+            <li class="uk-text-bold"><a>Filter Applied :</a></li>
+            {% if not filters %}
+                <li class="uk-text-bold"><a> None </a></li>
+            {% endif %}
+            {% for filter in filters %}
+                <li class="uk-text-bold"><a> {{ filter }} |</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+
+
+    <div class="body uk-container uk-align-center uk-flex-center@m">
+        <div class="uk-child-width-1-4@m uk-grid-small uk-grid-match" uk-grid>
+            {% for mobile in mobiles %}
+                <div class="uk-card uk-card-hover uk-card-default uk-card-body">
+                    <img src="https://technave.com/data/files/mall/article/201701190951104840.png" height="10px">
+                    <div class="description">
+                        <h3 class="uk-card-title title-font uk-text-center">
+                            {{ mobile.name }}
+                        </h3>
+                        <p class="uk-text-center chipku"> By {{ mobile.brand }} </p>
+                        <h4 class="title-font">
+                            <p> <strong>₹{{ mobile.to_India }} </strong></p>
+                        </h4>
+                        <div class="specs">
+                            <p> <strong>OS</strong>: <i class="fab android fa-{{ mobile.for_fa }}"></i> {{ mobile.os }} </p>
+                            <p> <strong>Bands</strong>: {{ mobile.give_me_bands }} </p>
+                            <p> <strong>Processor</strong>: {{ mobile.proccessor_speed }} GHz</p>
+                        </div>
+                    </div>
+{#                    <span class="uk-icon-button uk-button-secondary button-mod">Add to   <i class="fas fa-cart-plus"></i></span>#}
+                </div   >
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>
+<script>
+    let price0 = document.getElementById("5k");
+    let price1 = document.getElementById("5se10");
+    let price2 = document.getElementById("10se15");
+    let android = document.getElementById("android");
+    let ios = document.getElementById("ios");
+    let wp = document.getElementById("wp");
+    let symbian = document.getElementById("symbian");
+    let blackberry = document.getElementById("blackberry");
+    let gsm = document.getElementById("gsm");
+    let tg = document.getElementById("3g");
+    let fg = document.getElementById("4g");
+    let wifi = document.getElementById("wifi");
+    let edge = document.getElementById("edge");
+    let gprs = document.getElementById("gprs");
+    let bar = document.getElementById("val");
+    let range = document.getElementsByClassName("uk-range")[0];
+
+    //$(document).on("click touchend", "#5k, #5se10, #10se15, #android, #ios, #wp, #symbian, #blackberry, #gsm, #3g, #4g, #wifi, #edge, #grps", function () {
+    //    showFilters();
+    //});
+
+    $(document).on("click touchend", "#submitwa", function () {
+        shipIt();
+    });
+
+
+    function priceHandler(prev="") {
+        if (prev === "all") {
+            prev = "";
+        }
+        let price = prev;
+        if(!price0.checked && prev === "" && !price1.checked && !price2.checked) {
+            return "all";
+        }
+        if(price0.checked && !prev.includes("0to5000")) {
+            if(price !== "")
+                price += "&";
+            price += "0to5000";
+        }
+        if(price1.checked && !prev.includes("5000to10000")) {
+            if(price !== "")
+                price += "&";
+            price += "5000to10000";
+        }
+        if(price2.checked && !prev.includes("10000to15000")) {
+            if(price !== "")
+                price += "&";
+            price += "10000to15000";
+        }
+        return price;
+    }
+
+    /**
+     * @return {string}
+     */
+    function OSHandler(prev="") {
+        if (prev === "all") {
+            prev = "";
+        }
+        let os = prev;
+        if(!android.checked && prev==="" && !ios.checked && !symbian.checked && !wp.checked && !blackberry.checked) {
+            return "all";
+        }
+        if(android.checked && !prev.includes("Android")) {
+            if(os !== "")
+                os += "&";
+            os += "Android";
+        }
+        if(ios.checked && !prev.includes("iOS")) {
+            if(os !== "")
+                os += "&";
+            os += "iOS";
+        }
+        if(symbian.checked && !prev.includes("Symbian")) {
+            if(os !== "")
+                os += "&";
+            os += "Symbian";
+        }
+        if(blackberry.checked && !prev.includes("BlackBerry")) {
+            if(os !== "")
+                os += "&";
+            os += "BlackBerry";
+        }
+        if(wp.checked && !prev.includes("Windows")) {
+            if(os !== "")
+                os += "&";
+            os += "Windows";
+        }
+        return os;
+    }
+
+    /**
+     * @return {string}
+     */
+    function bandHandler(prev="") {
+        if (prev === "all") {
+            prev = "";
+        }
+        let band = prev;
+        if(!gsm.checked && !tg.checked && !fg.checked && !wifi.checked && !gprs.checked && !edge.checked && prev==="") {
+            return "all";
+        }
+        if(gsm.checked && !prev.includes("GSM")) {
+            if(band !== "")
+                band += "&";
+            band += "GSM";
+        }
+        if(tg.checked && !prev.includes("3G")) {
+            if(band !== "")
+                band += "&";
+            band += "3G";
+        }
+        if(fg.checked && !prev.includes("4G")) {
+            if(band !== "")
+                band += "&";
+            band += "4G";
+        }
+        if(wifi.checked && !prev.includes("WiFi")) {
+            if(band !== "")
+                band += "&";
+            band += "WiFi";
+        }
+        if(gprs.checked && !prev.includes("GPRS")) {
+            if(band !== "")
+                band += "&";
+            band += "GPRS";
+        }
+
+        if(edge.checked && !prev.includes("Edge")) {
+            if(band !== "")
+                band += "&";
+            band += "Edge";
+        }
+        return band;
+    }
+
+
+    function shipIt() {
+        if(document.URL !== document.location.origin + "/" ) {
+            query = document.URL.split("=");
+            prev = query[1].split('/')
+            let url = document.location.origin + "/q=";
+            url += priceHandler(prev[0]) + "/" + OSHandler(prev[1]) + "/" + bandHandler(prev[2]) +"/" + range.value;
+            window.location.replace(url);
+        }
+        else {
+            let url = document.location.origin + "/q=";
+            url += priceHandler() + "/" + OSHandler() + "/" + bandHandler() +"/" + range.value;
+            window.location.replace(url);
+        }
+    }
+
+    function showIt() {
+        bar.innerText = range.value + " GHz";
+    }
+
+    function backtrackPrice(prev) {
+        price0.checked = prev.includes("0to5000");
+        price1.checked = prev.includes("5000to10000");
+        price2.checked = prev.includes("10000to15000");
+    }
+
+    function backtrackOS(prev) {
+        android.checked = prev.includes("Android");
+        ios.checked = prev.includes("iOS");
+        symbian.checked = prev.includes("Symbian");
+        blackberry.checked = prev.includes("Blackberry");
+        wp.checked = prev.includes("Windows");
+    }
+
+    function backtrackData(prev) {
+        gsm.checked = prev.includes("GSM");
+        edge.checked = prev.includes("Edge");
+        tg.checked = prev.includes("3G");
+        fg.checked = prev.includes("4G");
+        wifi.checked = prev.includes("WiFi");
+        gprs.checked = prev.includes("GPRS");
+    }
+
+    function backtrack() {
+        if(document.URL !== document.location.origin + "/" && !document.URL.includes('search')) {
+            query = document.URL.split("=");
+            prev = query[1].split('/');
+            backtrackPrice(prev[0]);
+            backtrackOS(prev[1]);
+            backtrackData(prev[2]);
+        }
+    }
+
+    function searchIt() {
+        var q = document.getElementById('search').value;
+        let url = document.location.origin + "/search=";
+        url += q;
+        window.location.replace(url);
+        {#console.log(url);#}
+    }
+    window.addEventListener('load', showIt);
+    window.addEventListener('load', backtrack);
+
+</script>
