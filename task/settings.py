@@ -15,7 +15,7 @@ SECRET_KEY = '7jb944=p&g*papc2&($w64=x0y@_#j4jeiiue368@mxip$+50h'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -113,5 +113,6 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
+    '/var/www/static/',
 ]
 
