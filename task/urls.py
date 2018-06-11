@@ -15,12 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from django.urls import path
 
 from mobile.views import home, queries, search
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    url('admin/', admin.site.urls),
     url(r'^$', home, name='home'),
     url(r'^q=(?P<price>.+)/(?P<os>.+)/(?P<data>.+)/(?P<core>.+)$', queries, name='search_by_all'),
     url(r'^search=(?P<query>.+)$', search, name='search')
