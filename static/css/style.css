@@ -9,6 +9,8 @@
 
 #navBar {
     background-color: rgb(35,35,35) !important;
+    position: relative !important;
+    z-index: 980 !important;
 }
 
 .safedi {
@@ -28,7 +30,7 @@
     margin-top: 3%;
     overflow-y: hidden;
     height: 100%;
-    widows: 100%;
+    widows: 100;
     overflow-x: hidden;
 }
 
@@ -78,4 +80,15 @@
 .sub {
     margin-top: 0 !important;
     padding: 0.75% !important;
+}
+
+@media (max-width: 960px) {
+	img {
+		height: 175px !important;
+        max-width: 250px !important;
+	}
+
+    .uk-card {
+        max-width: 250px !important;
+    }
 }
