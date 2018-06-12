@@ -293,7 +293,7 @@
 
 
     function shipIt() {
-        if(document.URL !== document.location.origin + "/" ) {
+        if(document.URL !== document.location.origin + "/" && !document.URL.includes('search')) {
             query = document.URL.split("=");
             prev = query[1].split('/')
             let url = document.location.origin + "/q=";
